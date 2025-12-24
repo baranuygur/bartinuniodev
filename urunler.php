@@ -79,124 +79,31 @@
             </div>
         </div>
 
+<?php
+require_once 'admin/baglan.php';
+// Tüm ürünleri çek
+$sorgu = $db->query("SELECT * FROM urunler");
+$urunler = $sorgu->fetchAll(PDO::FETCH_ASSOC);
+?>
         <div class="row">
             
+            <?php foreach($urunler as $urun): ?>
             <div class="col-md-4 mb-4">
                 <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=1" class="card-img-top urunresim" alt="Bilgisayar">
+                    <?php if($urun['resim']): ?>
+                        <img src="resimler/<?php echo $urun['resim']; ?>" class="card-img-top urunresim" alt="<?php echo $urun['urun_adi']; ?>">
+                    <?php else: ?>
+                        <img src="resimler/varsayilan.jpg" class="card-img-top urunresim" alt="Resim Yok">
+                    <?php endif; ?>
                     <div class="card-body">
-                        <h5 class="card-title urunbaslik">Dell Latitude E7470</h5>
-                        <p class="urunozellik">Intel Core i5 6. Nesil</p>
-                        <p class="urunozellik">8GB RAM - 256GB SSD</p>
-                        <p class="urunfiyat">4.500 TL</p>
-                        <a href="detay.php?id=1" class="btn dugme2">Detayları Gör</a>
+                        <h5 class="card-title urunbaslik"><?php echo $urun['urun_adi']; ?></h5>
+                        <p class="urunozellik"><?php echo mb_strimwidth($urun['aciklama'], 0, 30, "..."); ?></p>
+                        <p class="urunfiyat"><?php echo number_format($urun['fiyat'], 2); ?> TL</p>
+                        <a href="detay.php?id=<?php echo $urun['id']; ?>" class="btn dugme2">Detayları Gör</a>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=2" class="card-img-top urunresim" alt="Bilgisayar">
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik">HP EliteBook 840 G3</h5>
-                        <p class="urunozellik">Intel Core i7 6. Nesil</p>
-                        <p class="urunozellik">16GB RAM - 512GB SSD</p>
-                        <p class="urunfiyat">6.200 TL</p>
-                        <a href="detay.php?id=2" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=3" class="card-img-top urunresim" alt="Bilgisayar">
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik">Lenovo ThinkPad T470</h5>
-                        <p class="urunozellik">Intel Core i5 7. Nesil</p>
-                        <p class="urunozellik">8GB RAM - 256GB SSD</p>
-                        <p class="urunfiyat">5.100 TL</p>
-                        <a href="detay.php?id=3" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=4" class="card-img-top urunresim" alt="Bilgisayar">
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik">Asus VivoBook 15</h5>
-                        <p class="urunozellik">Intel Core i3 10. Nesil</p>
-                        <p class="urunozellik">4GB RAM - 128GB SSD</p>
-                        <p class="urunfiyat">3.800 TL</p>
-                        <a href="detay.php?id=4" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=5" class="card-img-top urunresim" alt="Bilgisayar">
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik">Acer Aspire 5</h5>
-                        <p class="urunozellik">AMD Ryzen 5</p>
-                        <p class="urunozellik">8GB RAM - 512GB SSD</p>
-                        <p class="urunfiyat">5.500 TL</p>
-                        <a href="detay.php?id=5" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=6" class="card-img-top urunresim" alt="Bilgisayar">
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik">MSI GF63 Thin</h5>
-                        <p class="urunozellik">Intel Core i7 9. Nesil</p>
-                        <p class="urunozellik">16GB RAM - 512GB SSD - GTX 1650</p>
-                        <p class="urunfiyat">9.800 TL</p>
-                        <a href="detay.php?id=6" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=1" class="card-img-top urunresim" alt="Bilgisayar">
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik">Dell Inspiron 15</h5>
-                        <p class="urunozellik">Intel Core i5 8. Nesil</p>
-                        <p class="urunozellik">8GB RAM - 256GB SSD</p>
-                        <p class="urunfiyat">4.900 TL</p>
-                        <a href="detay.php?id=7" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=2" class="card-img-top urunresim" alt="Bilgisayar">
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik">HP Pavilion 14</h5>
-                        <p class="urunozellik">Intel Core i3 11. Nesil</p>
-                        <p class="urunozellik">8GB RAM - 256GB SSD</p>
-                        <p class="urunfiyat">4.200 TL</p>
-                        <a href="detay.php?id=8" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card urunkart">
-                    <img src="https://picsum.photos/400/300?random=3" class="card-img-top urunresim" alt="Bilgisayar">
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik">Lenovo IdeaPad 3</h5>
-                        <p class="urunozellik">AMD Ryzen 3</p>
-                        <p class="urunozellik">4GB RAM - 256GB SSD</p>
-                        <p class="urunfiyat">3.500 TL</p>
-                        <a href="detay.php?id=9" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
 
         </div>
     </div>

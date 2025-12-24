@@ -1,0 +1,10 @@
+Bu klasordeki resimler:
+
+asusvivo15-1.jpg       -> Asus VivoBook 15 (Okul kategorisi)
+lenovothinkpadt470-1.jpg -> Lenovo ThinkPad T470 (Ofis kategorisi)
+msigf63-1.jpg          -> MSI GF63 Thin (Oyun kategorisi)
+hpzbook15g3-1.jpg      -> HP ZBook 15 G3 (Kreatif kategorisi)
+
+Daha fazla urun resmi eklemek icin ayni isimlendirme stilini kullanin:
+ornek: asusvivo15-2.jpg, asusvivo15-3.jpg vb.
+

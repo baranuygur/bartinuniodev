@@ -1,14 +1,19 @@
 <?php
 require_once 'admin/baglan.php';
 
-// Kategorilere göre birer ürün çekelim
-$kategoriler = ['Okul', 'Ofis', 'Oyun', 'Kreatif'];
-$vitrin = [];
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    header("Location: urunler.php");
+    exit;
+}
 
-foreach ($kategoriler as $kat) {
-    $sorgu = $db->prepare("SELECT * FROM urunler WHERE kategori = ? LIMIT 1");
-    $sorgu->execute([$kat]);
-    $vitrin[$kat] = $sorgu->fetch(PDO::FETCH_ASSOC);
+$id = $_GET['id'];
+$sorgu = $db->prepare("SELECT * FROM urunler WHERE id = ?");
+$sorgu->execute([$id]);
+$urun = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+if (!$urun) {
+    header("Location: urunler.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -16,7 +21,7 @@ foreach ($kategoriler as $kat) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uygur Bilgisayar - Bilgisayar ve Laptop Satışı</title>
+    <title><?php echo $urun['urun_adi']; ?> - Uygur Bilgisayar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="stil.css">
 </head>
@@ -41,41 +46,27 @@ foreach ($kategoriler as $kat) {
         </div>
     </nav>
 
-    <div class="anakapak">
-        <div class="kapakoverlap"></div>
-        <div class="container">
-            <div class="kapakicerik">
-                <p class="ustmetin">Her işe uygun, Uygur Bilgisayar</p>
-                <a href="urunler.php" class="btn dugme1">Alışverişe Başla</a>
-            </div>
-        </div>
-    </div>
-
     <div class="container my-5">
-        <h2 class="baslik2 mb-4">Kategorilerimiz</h2>
         <div class="row">
-            
-            <?php foreach ($kategoriler as $kat): ?>
-            <?php if (isset($vitrin[$kat]) && $vitrin[$kat]): $urun = $vitrin[$kat]; ?>
-            <div class="col-md-3 mb-4">
-                <div class="card urunkart">
-                    <div class="kategorietu"><?php echo $kat; ?></div>
-                    <?php if($urun['resim']): ?>
-                        <img src="resimler/<?php echo $urun['resim']; ?>" class="card-img-top urunresim" alt="<?php echo $urun['urun_adi']; ?>">
-                    <?php else: ?>
-                        <img src="resimler/varsayilan.jpg" class="card-img-top urunresim" alt="Resim Yok">
-                    <?php endif; ?>
-                    <div class="card-body">
-                        <h5 class="card-title urunbaslik"><?php echo $urun['urun_adi']; ?></h5>
-                        <p class="urunozellik"><?php echo mb_strimwidth($urun['aciklama'], 0, 30, "..."); ?></p>
-                        <p class="urunfiyat"><?php echo number_format($urun['fiyat'], 2); ?> TL</p>
-                        <a href="detay.php?id=<?php echo $urun['id']; ?>" class="btn dugme2">Detayları Gör</a>
-                    </div>
-                </div>
+            <div class="col-md-6">
+                <?php if($urun['resim']): ?>
+                    <img src="resimler/<?php echo $urun['resim']; ?>" class="img-fluid rounded shadow" alt="<?php echo $urun['urun_adi']; ?>">
+                <?php else: ?>
+                    <img src="resimler/varsayilan.jpg" class="img-fluid rounded shadow" alt="Resim Yok">
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
-            <?php endforeach; ?>
-            
+            <div class="col-md-6">
+                <h1 class="mb-3"><?php echo $urun['urun_adi']; ?></h1>
+                <p class="text-muted mb-4">Kategori: <span class="badge bg-secondary"><?php echo isset($urun['kategori']) ? $urun['kategori'] : 'Genel'; ?></span></p>
+                <div class="mb-4">
+                    <h3 class="text-primary"><?php echo number_format($urun['fiyat'], 2); ?> TL</h3>
+                </div>
+                <div class="mb-4">
+                    <h5>Ürün Açıklaması</h5>
+                    <p><?php echo nl2br($urun['aciklama']); ?></p>
+                </div>
+                <a href="#" class="btn dugme1 btn-lg">Satın Al</a>
+            </div>
         </div>
     </div>
 
@@ -101,4 +92,3 @@ foreach ($kategoriler as $kat) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
