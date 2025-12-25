@@ -4,7 +4,7 @@ require 'baglan.php';
 
 if (isset($_POST['giris'])) {
     $kadi = $_POST['kadi'];
-    $sifre = md5($_POST['sifre']); // Basit olmasi istendiği için MD5
+    $sifre = md5($_POST['sifre']);
 
     if ($kadi && $sifre) {
         $sorgu = $db->prepare("SELECT * FROM yoneticiler WHERE kullanici_adi = :k AND sifre = :s");
@@ -58,3 +58,4 @@ if (isset($_POST['giris'])) {
 
 </body>
 </html>
+
